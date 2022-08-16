@@ -1,7 +1,22 @@
 import logo from './logo.svg';
 import './App.css';
+import { makeAutoObservable } from "mobx"
 import { observer } from 'mobx-react';
 import {useState} from 'react'
+
+class Store {
+  count = 0
+
+  constructor() {
+      makeAutoObservable(this)
+  }
+
+  increaseCount() {
+      this.count += 1
+  }
+}
+
+const store = new Store()
 
 // isBad ------- begin -----------------------------------------
 const App = function () {
@@ -10,9 +25,11 @@ const App = function () {
   // const [test, setTest] = useState(0);
 
   return (
-    <div className="App">
+    <div className="App" onClick={() => {
+      store.increaseCount()
+    }}>
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+        <img src={logo} className="App-logo" alt="logo"/>
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
@@ -22,7 +39,7 @@ const App = function () {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
+          Learn React {store.count}
         </a>
       </header>
     </div>
@@ -40,7 +57,9 @@ export default observer(App);
 //   // const [test, setTest] = useState(0);
 
 //   return (
-//     <div className="App">
+//     <div className="App" onClick={() => {
+//       store.increaseCount()
+//     }}>
 //       <header className="App-header">
 //         <img src={logo} className="App-logo" alt="logo" />
 //         <p>
@@ -52,7 +71,7 @@ export default observer(App);
 //           target="_blank"
 //           rel="noopener noreferrer"
 //         >
-//           Learn React
+//           Learn React {store.count}
 //         </a>
 //       </header>
 //     </div>
